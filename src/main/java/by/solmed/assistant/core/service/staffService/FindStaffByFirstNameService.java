@@ -2,6 +2,8 @@ package by.solmed.assistant.core.service.staffService;
 
 import by.solmed.assistant.core.db.StaffDatabase;
 import by.solmed.assistant.core.domain.Staff;
+import by.solmed.assistant.core.service.staffService.requests.FindStaffByFirstNameRequest;
+import by.solmed.assistant.core.service.staffService.responses.FindStaffByFirstNameResponse;
 
 import java.util.Optional;
 
@@ -13,10 +15,10 @@ public class FindStaffByFirstNameService {
         this.database = database;
     }
 
-    public Staff execute(String firstName) {
+    public FindStaffByFirstNameResponse execute(FindStaffByFirstNameRequest request) {
 
-        Optional<Staff> staff = database.findStaffByFirstName(firstName);
+        Optional<Staff> staff = database.findStaffByFirstName(request.getFirstName());
 
-        return staff.isPresent() ? staff.get() : null;
+        return staff.map(FindStaffByFirstNameResponse::new).orElse(null);
     }
 }
