@@ -2,6 +2,8 @@ package by.solmed.assistant.core.service.procedureService;
 
 import by.solmed.assistant.core.db.ProcedureDatabase;
 import by.solmed.assistant.core.domain.Procedure;
+import by.solmed.assistant.core.service.procedureService.requests.FindProcedureByIdRequest;
+import by.solmed.assistant.core.service.procedureService.responses.FindProcedureByIdResponse;
 
 import java.util.Optional;
 
@@ -13,10 +15,10 @@ public class FindProcedureByIdService {
         this.database = database;
     }
 
-    public Procedure execute(long id) {
+    public FindProcedureByIdResponse execute(FindProcedureByIdRequest request) {
 
-        Optional<Procedure> procedure = database.findProcedureById(id);
+        Optional<Procedure> procedure = database.findProcedureById(request.getId());
 
-        return procedure.isPresent() ? procedure.get() : null;
+        return procedure.map(FindProcedureByIdResponse::new).orElse(null);
     }
 }

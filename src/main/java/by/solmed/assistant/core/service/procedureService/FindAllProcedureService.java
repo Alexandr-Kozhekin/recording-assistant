@@ -2,6 +2,7 @@ package by.solmed.assistant.core.service.procedureService;
 
 import by.solmed.assistant.core.db.ProcedureDatabase;
 import by.solmed.assistant.core.domain.Procedure;
+import by.solmed.assistant.core.service.procedureService.responses.FindAllProcedureResponse;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class FindAllProcedureService {
         this.database = database;
     }
 
-    public List<Procedure> execute() {
-        return database.findAllProcedures();
+    public FindAllProcedureResponse execute() {
+        return new FindAllProcedureResponse(database.findAllProcedures());
     }
 }

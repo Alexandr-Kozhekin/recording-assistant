@@ -2,6 +2,7 @@ package by.solmed.assistant.core.service.procedureService;
 
 import by.solmed.assistant.core.db.ProcedureDatabase;
 import by.solmed.assistant.core.domain.Procedure;
+import by.solmed.assistant.core.service.procedureService.requests.SaveProcedureRequest;
 
 public class SaveProcedureService {
 
@@ -11,8 +12,8 @@ public class SaveProcedureService {
         this.database = database;
     }
 
-    public void execute(Procedure procedure) {
-        database.saveProcedure(procedure);
+    public void execute(SaveProcedureRequest request) {
+        database.saveProcedure(request.getProcedure());
     }
 
 }
