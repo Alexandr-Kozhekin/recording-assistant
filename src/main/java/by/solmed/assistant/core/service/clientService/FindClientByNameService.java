@@ -2,6 +2,8 @@ package by.solmed.assistant.core.service.clientService;
 
 import by.solmed.assistant.core.db.ClientDatabase;
 import by.solmed.assistant.core.domain.Client;
+import by.solmed.assistant.core.service.clientService.requests.FindClientByNameRequest;
+import by.solmed.assistant.core.service.clientService.responses.FindClientByNameResponse;
 
 import java.util.Optional;
 
@@ -13,10 +15,10 @@ public class FindClientByNameService {
         this.database = database;
     }
 
-    public Client execute(String firstName) {
+    public FindClientByNameResponse execute(FindClientByNameRequest request) {
 
-        Optional<Client> client = database.findClientByFirstName(firstName);
+        Optional<Client> client = database.findClientByFirstName(request.getFirstName());
 
-        return client.isPresent() ? client.get() : null;
+        return client.map(FindClientByNameResponse::new).orElse(null);
     }
 }
