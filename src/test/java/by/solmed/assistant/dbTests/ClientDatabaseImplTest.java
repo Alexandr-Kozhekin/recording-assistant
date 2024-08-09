@@ -10,12 +10,10 @@ import org.junit.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 public class ClientDatabaseImplTest {
 
     private ClientDatabase database;
 
-    @Autowired
     public ClientDatabaseImplTest() {
         database = new ClientDatabaseImpl();
     }
