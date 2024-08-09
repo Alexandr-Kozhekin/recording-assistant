@@ -1,6 +1,5 @@
 package by.solmed.assistant.core.db;
 
-import by.solmed.assistant.core.domain.Client;
 import by.solmed.assistant.core.domain.Ticket;
 
 import java.util.List;

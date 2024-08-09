@@ -1,11 +1,8 @@
 package by.solmed.assistant.core.db;
 
 import by.solmed.assistant.core.domain.Procedure;
-import by.solmed.assistant.core.domain.Ticket;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ProcedureDatabaseImpl implements ProcedureDatabase {
 
