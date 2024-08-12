@@ -1,6 +1,6 @@
 package by.solmed.assistant.core.service.staffService.requests;
 
-public class SaveStuffRequest {
+public class SaveStaffRequest {
 
     public long id;
     public String firstName;
@@ -13,14 +13,14 @@ public class SaveStuffRequest {
     public String category;
     public String type;
 
-    public SaveStuffRequest(String firstName, String lastName, String gender, int age) {
+    public SaveStaffRequest(String firstName, String lastName, String gender, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.age = age;
     }
 
-    public SaveStuffRequest(String firstName, String lastName, String gender, int age, String major, String subdivision,
+    public SaveStaffRequest(String firstName, String lastName, String gender, int age, String major, String subdivision,
                             String experience, String category, String type) {
         this.firstName = firstName;
         this.lastName = lastName;
