@@ -1,39 +1,50 @@
 package by.solmed.assistant.core.service.ticketService.requests;
 
-import by.solmed.assistant.core.domain.Client;
-import by.solmed.assistant.core.domain.Procedure;
-import by.solmed.assistant.core.domain.Staff;
-
-import java.util.Date;
 import java.util.List;
 
 public class SaveTicketRequest {
 
-    private Client client;
-    private List<Procedure> procedures;
-    private Staff staff;
-    private Date dateAppointment;
+    private String clientFirstName;
+    private List<Long> idList;
+    private String staffFirstName;
+    private String dateAppointment;
 
-    public SaveTicketRequest(Client client, List<Procedure> procedures, Staff staff, Date dateAppointment) {
-        this.client = client;
-        this.procedures = procedures;
-        this.staff = staff;
+    public SaveTicketRequest(String clientFirstName, List<Long> idList, String staffFirstName, String dateAppointment) {
+        this.clientFirstName = clientFirstName;
+        this.idList = idList;
+        this.staffFirstName = staffFirstName;
         this.dateAppointment = dateAppointment;
     }
 
-    public Client getClient() {
-        return client;
+    public String getClientFirstName() {
+        return clientFirstName;
     }
 
-    public List<Procedure> getProcedures() {
-        return procedures;
+    public void setClientFirstName(String clientFirstName) {
+        this.clientFirstName = clientFirstName;
     }
 
-    public Staff getStaff() {
-        return staff;
+    public List<Long> getIdList() {
+        return idList;
     }
 
-    public Date getDateAppointment() {
+    public void setIdList(List<Long> idList) {
+        this.idList = idList;
+    }
+
+    public String getStaffFirstName() {
+        return staffFirstName;
+    }
+
+    public void setStaffFirstName(String staffFirstName) {
+        this.staffFirstName = staffFirstName;
+    }
+
+    public String getDateAppointment() {
         return dateAppointment;
+    }
+
+    public void setDateAppointment(String dateAppointment) {
+        this.dateAppointment = dateAppointment;
     }
 }
