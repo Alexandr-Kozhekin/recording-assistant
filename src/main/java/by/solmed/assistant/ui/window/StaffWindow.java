@@ -2,7 +2,7 @@ package by.solmed.assistant.ui.window;
 
 import javax.swing.*;
 
-public class SaveClientWindow {
+public class StaffWindow {
     public static void run(final JFrame f, final int width, final int height) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -13,5 +13,6 @@ public class SaveClientWindow {
                 f.setVisible(true);
             }
         });
+
     }
 }
