@@ -1,7 +1,6 @@
 package by.solmed.assistant.ui.listeners;
 
 import by.solmed.assistant.core.db.ClientDatabase;
-import by.solmed.assistant.core.db.ClientDatabaseImpl;
 import by.solmed.assistant.core.domain.Client;
 import by.solmed.assistant.core.service.clientService.DeleteClientByIdService;
 import by.solmed.assistant.core.service.clientService.FindClientByNameService;
@@ -12,6 +11,7 @@ import by.solmed.assistant.core.service.clientService.requests.SaveClientRequest
 import by.solmed.assistant.core.service.clientService.responses.DeleteClientByIdResponse;
 import by.solmed.assistant.core.service.clientService.responses.FindClientByNameResponse;
 import by.solmed.assistant.core.service.clientService.responses.SaveClientResponse;
+import by.solmed.assistant.core.service.validators.CoreError;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,14 +20,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.solmed.assistant.ui.window.SwingConsole.run;
+public class ClientListeners extends JFrame {
 
-public class SaveClientListeners extends JFrame {
-
-    private final ClientDatabase database = new ClientDatabaseImpl();
-    private final SaveClientService saveClientService = new SaveClientService(database);
-    private final FindClientByNameService findClientByNameService = new FindClientByNameService(database);
-    private final DeleteClientByIdService deleteClientByIdService = new DeleteClientByIdService(database);
+    private SaveClientService saveClientService;
+    private FindClientByNameService findClientByNameService;
+    private DeleteClientByIdService deleteClientByIdService;
 
     private List<Client> list = new ArrayList<>();
 
@@ -50,8 +47,8 @@ public class SaveClientListeners extends JFrame {
     private JTextField resultClient = new JTextField(80);
 
     private JButton saveClient = new JButton("Добавить");
-    private JTextArea clientsList = new JTextArea(20, 15);
-
+    private JTextArea errorsList = new JTextArea(5, 20);
+    private JTextArea result = new JTextArea(20, 15);
 
     class SaveClientL implements ActionListener {
 
@@ -63,13 +60,20 @@ public class SaveClientListeners extends JFrame {
                     state.getText(), city.getText(), street.getText(), zip.getText());
             SaveClientResponse response = saveClientService.execute(request);
 
-            if(response != null && response.client != null) {
-                list.add(response.getClient());
-
-                clientsList.append(response.getClient().getId() + "| " + response.getClient().getFirstName()
-                        + " " + response.getClient().getLastName() + " " + response.getClient().getGender()
-                        + " " + response.getClient().getAge() + "\n");
+            if(response.getErrorList() != null) {
+                errorsList.setText("");
+                for (CoreError error : response.getErrorList()) {
+                    errorsList.append(error.getMessage() + "\n");
+                }
+                return;
             }
+            errorsList.setText("");
+
+            list.add(response.getClient());
+
+            result.append(response.getClient().getId() + "| " + response.getClient().getFirstName()
+                    + " " + response.getClient().getLastName() + " " + response.getClient().getGender()
+                    + " " + response.getClient().getAge() + "\n");
         }
 
     }
@@ -81,10 +85,16 @@ public class SaveClientListeners extends JFrame {
             FindClientByNameRequest request = new FindClientByNameRequest(findClient.getText());
             FindClientByNameResponse response = findClientByNameService.execute(request);
 
-            if(response != null && response.getClient() != null) {
-                resultClient.setText(response.getClient().toString());
+            if(response.getErrorList() != null) {
+                errorsList.setText("");
+                for (CoreError error : response.getErrorList()) {
+                    errorsList.append(error.getMessage() + "\n");
+                }
+                return;
             }
+            errorsList.setText("");
 
+            resultClient.setText(response.getClient().toString());
         }
     }
 
@@ -95,13 +105,30 @@ public class SaveClientListeners extends JFrame {
             DeleteClientByIdRequest request = new DeleteClientByIdRequest(Long.parseLong(deleteClient.getText()));
             DeleteClientByIdResponse response = deleteClientByIdService.execute(request);
 
-            if (response != null && response.isResponse()) {
-                list.removeIf(c -> c.getId() == request.getId());
+            if (response.getErrorList() != null) {
+                errorsList.setText("");
+                for (CoreError error : response.getErrorList()) {
+                    errorsList.append(error.getMessage() + "\n");
+                }
+                return;
             }
+            result.setText("");
+
+            list.removeIf(c -> c.getId() == request.getId());
+
+            for(Client client : list)
+                result.append(client.getId() + "| " + client.getFirstName() + " " + client.getLastName()
+                        + " " + client.getGender() + " " + client.getAge() + "\n");
+
         }
     }
 
-    public SaveClientListeners() {
+    public ClientListeners(ClientDatabase database) {
+
+        saveClientService = new SaveClientService(database);
+        findClientByNameService = new FindClientByNameService(database);
+        deleteClientByIdService = new DeleteClientByIdService(database);
+
         SaveClientL saveClientL = new SaveClientL();
         FindClientsL findClientsL = new FindClientsL();
         DeleteClientL deleteClientL = new DeleteClientL();
@@ -111,10 +138,9 @@ public class SaveClientListeners extends JFrame {
         findClient.addActionListener(findClientsL);
 
         list = database.findAllClient();
-        clientsList.setText("");
         if(!list.isEmpty())
             for(Client client : list)
-                clientsList.append(client.getId() + "| " + client.getFirstName() + " " + client.getLastName()
+                result.append(client.getId() + "| " + client.getFirstName() + " " + client.getLastName()
                         + " " + client.getGender() + " " + client.getAge() + "\n");
 
         setLayout(new FlowLayout());
@@ -139,6 +165,8 @@ public class SaveClientListeners extends JFrame {
         add(new Label("Почтовый индекс"));
         add(zip);
 
+        add(errorsList);
+
         add(BorderLayout.CENTER, saveClient);
         add(new Label("Найти"));
         add(BorderLayout.CENTER, findClient);
@@ -147,12 +175,8 @@ public class SaveClientListeners extends JFrame {
 
         add(BorderLayout.CENTER, resultClient);
 
-        add(BorderLayout.SOUTH, clientsList);
+        add(BorderLayout.SOUTH, result);
 
-    }
-
-    public static void main(String[] args) {
-        run(new SaveClientListeners(), 1024, 500);
     }
 
 }
