@@ -8,7 +8,7 @@ public class Ticket {
     private Client client;
     private List<Procedure> procedures;
     private Staff staff;
-    private float totalPrice = 0.0F;
+    private Double totalPrice = 0.0D;
     private Date dateAt = new Date();
     private Date dateAppointment;
 
@@ -58,11 +58,11 @@ public class Ticket {
         this.staff = staff;
     }
 
-    public float getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -87,7 +87,7 @@ public class Ticket {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return id == ticket.id && Float.compare(totalPrice, ticket.totalPrice) == 0
+        return id == ticket.id && Double.compare(totalPrice, ticket.totalPrice) == 0
                 && Objects.equals(client, ticket.client)
                 && Objects.equals(procedures, ticket.procedures)
                 && Objects.equals(staff, ticket.staff)

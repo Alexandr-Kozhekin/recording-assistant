@@ -9,15 +9,15 @@ public class Procedure {
     private String name;
     private String description;
     private List<Сompound> materials;
-    private float totalPrice = 0.0F;
+    private Double totalPrice = 0.0D;
 
-    public Procedure(String name, String description, float totalPrice) {
+    public Procedure(String name, String description, Double totalPrice) {
         this.name = name;
         this.description = description;
         this.totalPrice = totalPrice;
     }
 
-    public Procedure(long id, String name, String description, float totalPrice) {
+    public Procedure(long id, String name, String description, Double totalPrice) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -30,7 +30,7 @@ public class Procedure {
         this.materials = materials;
 
         for(Сompound c : materials)
-            totalPrice += (c.getPrice() * ((float) 100 / 25));
+            totalPrice += (c.getPrice() * ((double) 100 / 25));
     }
 
     public long getId() {
@@ -65,11 +65,11 @@ public class Procedure {
         this.materials = materials;
     }
 
-    public float getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -78,7 +78,10 @@ public class Procedure {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Procedure procedure = (Procedure) o;
-        return id == procedure.id && Float.compare(totalPrice, procedure.totalPrice) == 0 && Objects.equals(name, procedure.name) && Objects.equals(description, procedure.description) && Objects.equals(materials, procedure.materials);
+        return id == procedure.id && Objects.equals(name, procedure.name)
+                && Objects.equals(description, procedure.description)
+                && Objects.equals(materials, procedure.materials)
+                && Objects.equals(totalPrice, procedure.totalPrice);
     }
 
     @Override

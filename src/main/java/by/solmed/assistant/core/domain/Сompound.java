@@ -6,12 +6,12 @@ public class Сompound {
 
     private long id;
     private String name;
-    private float price;
+    private Double price;
 
     public Сompound() {
     }
 
-    public Сompound(String name, float price) {
+    public Сompound(String name, Double price) {
         this.name = name;
         this.price = price;
     }
@@ -32,11 +32,11 @@ public class Сompound {
         this.name = name;
     }
 
-    public float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -45,7 +45,7 @@ public class Сompound {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Сompound сompound = (Сompound) o;
-        return id == сompound.id && Float.compare(price, сompound.price) == 0 && Objects.equals(name, сompound.name);
+        return id == сompound.id && Double.compare(price, сompound.price) == 0 && Objects.equals(name, сompound.name);
     }
 
     @Override
