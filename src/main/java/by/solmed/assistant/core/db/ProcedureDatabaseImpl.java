@@ -11,8 +11,8 @@ public class ProcedureDatabaseImpl implements ProcedureDatabase {
 
     {
         procedures = new ArrayList<>();
-        procedures.add(new Procedure(1L, "Test1", "Test1", 23.2F));
-        procedures.add(new Procedure(2L, "Test2", "Test2", 40.40F));
+        procedures.add(new Procedure(1L, "Test1", "Test1", 23.20D));
+        procedures.add(new Procedure(2L, "Test2", "Test2", 40.40D));
         procedureId = procedures.size();
     }
 
