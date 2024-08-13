@@ -27,8 +27,8 @@ public class FindClientValidator {
     }
 
     private Optional<CoreError> validFirstName(FindClientByNameRequest request) {
-        if(request.getFirstName().matches("[0-9]")) {
-            return Optional.of(new CoreError("Имя", "Имя не должно содержать цифры!"));
+        if(request.getFirstName().matches("\\d+")) {
+            return Optional.of(new CoreError("Имя", "Введите имя клиента!"));
         } else {
             return Optional.empty();
         }
@@ -39,7 +39,7 @@ public class FindClientValidator {
         Optional<Client> client = database.findClientByFirstName(request.getFirstName());
 
         if(client.isEmpty()) {
-            return Optional.of(new CoreError("Клиент", "Клиент не найден!"));
+            return Optional.of(new CoreError("Клиент", "Не найден!"));
         } else {
             return Optional.empty();
         }

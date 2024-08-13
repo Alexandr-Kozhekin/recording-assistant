@@ -22,16 +22,13 @@ public class SaveClientValidator {
         return errors;
     }
 
-//    ^[\\w-\\.] +@[\\w-]+(\\. [\\w-]+)*\\. [a-z]{2,}$ - для мыла
-//    -?\d+(\.\d+)? - для чисел
-
     private Optional<CoreError> validFirstName(SaveClientRequest request) {
         if(request.getFirstName() == null || request.getFirstName().isEmpty()) {
-            return Optional.of(new CoreError("Имя", "Имя не должно быть пустым!"));
-        } else if(request.getFirstName().matches("[0-9]")) {
-            return Optional.of(new CoreError("Имя", "Имя не должно содержать цифры!"));
-        } else if(request.getFirstName().matches("[а-яa-z]^?")) {
-            return Optional.of(new CoreError("Имя", "Имя должно начинаться с заглавной!"));
+            return Optional.of(new CoreError("Имя", "Не должно быть пустым!"));
+        } else if(request.getFirstName().matches("\\d+")) {
+            return Optional.of(new CoreError("Имя", "Не должно содержать только цифры!"));
+        } else if(request.getFirstName().matches("^[а-яa-z]*$")) {
+            return Optional.of(new CoreError("Имя", "Должно начинаться с заглавной!"));
         } else {
             return Optional.empty();
         }
@@ -39,11 +36,11 @@ public class SaveClientValidator {
 
     private Optional<CoreError> validLastName(SaveClientRequest request) {
         if(request.getLastName() == null || request.getLastName().isEmpty()) {
-            return Optional.of(new CoreError("Фамилия", "Фамилия не должна быть пустой!"));
-        } else if(request.getLastName().matches("[0-9]")) {
-            return Optional.of(new CoreError("Фамилия", "Фамилия не должна содержать цифры!"));
-        } else if(request.getLastName().matches("^?[а-яa-z]")) {
-            return Optional.of(new CoreError("Фамилия", "Фамилия должна начинаться с заглавной!"));
+            return Optional.of(new CoreError("Фамилия", "Не должно быть пустой!"));
+        } else if(request.getLastName().matches("\\d+")) {
+            return Optional.of(new CoreError("Фамилия", "Не должно содержать только цифры!"));
+        } else if(request.getLastName().matches("^[а-яa-z]*$")) {
+            return Optional.of(new CoreError("Фамилия", "Должно начинаться с заглавной!"));
         } else {
             return Optional.empty();
         }
@@ -51,9 +48,7 @@ public class SaveClientValidator {
 
     private Optional<CoreError> validGender(SaveClientRequest request) {
         if(request.getGender() == null || request.getGender().isEmpty()) {
-            return Optional.of(new CoreError("Пол", "Пол не должно быть пустым!"));
-        }  else if(request.getGender().matches("[*0-9]")) {
-            return Optional.of(new CoreError("Пол", "Пол не должна содержать цифры!"));
+            return Optional.of(new CoreError("Пол", "Не должно быть пустым!"));
         } else {
             return Optional.empty();
         }
@@ -61,9 +56,9 @@ public class SaveClientValidator {
 
     private Optional<CoreError> validAge(SaveClientRequest request) {
         if(request.getAge() == 0 || request.getAge() < 0) {
-            return Optional.of(new CoreError("Возраст", "Возраст не должно быть пустым!"));
-        } else if(String.valueOf(request.getAge()).matches("[*a-zA-Z],[*а-яА-Я]")) {
-            return Optional.of(new CoreError("Возраст", "Введите целое число!"));
+            return Optional.of(new CoreError("Возраст", "Не должно быть пустым!"));
+        } else if(!String.valueOf(request.getAge()).matches("\\d+")) {
+            return Optional.of(new CoreError("Возраст", "Должно содержать целое число!"));
         } else {
             return Optional.empty();
         }
@@ -71,9 +66,9 @@ public class SaveClientValidator {
 
     private Optional<CoreError> validPhoneNumber(SaveClientRequest request) {
         if(request.getPhoneNumber() == null || request.getPhoneNumber().isEmpty()) {
-            return Optional.of(new CoreError("Номер телефона", "Номер телефона не должно быть пустым!"));
-        } else if(String.valueOf(request.getPhoneNumber()).matches("[*a-zA-Z],[*а-яА-Я]")) {
-            return Optional.of(new CoreError("Номер телефона", "Номер телефона должен состоять из цифр!"));
+            return Optional.of(new CoreError("Номер телефона", "Не должно быть пустым!"));
+        } else if(!request.getPhoneNumber().matches("^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$")) {
+            return Optional.of(new CoreError("Номер телефона", "Неверный формат!"));
         } else {
             return Optional.empty();
         }
@@ -81,7 +76,9 @@ public class SaveClientValidator {
 
     private Optional<CoreError> validState(SaveClientRequest request) {
         if(request.getState() == null || request.getState().isEmpty()) {
-            return Optional.of(new CoreError("Страна", "Страна не должно быть пустым!"));
+            return Optional.of(new CoreError("Страна", "Не должно быть пустым!"));
+        } else if(request.getState().matches("^[а-яa-z]*$")) {
+            return Optional.of(new CoreError("Страна", "Должно начинаться с заглавной!"));
         } else {
             return Optional.empty();
         }
@@ -89,9 +86,9 @@ public class SaveClientValidator {
 
     private Optional<CoreError> validEmail(SaveClientRequest request) {
         if(request.getEmail() == null || request.getEmail().isEmpty()) {
-            return Optional.of(new CoreError("Электронная почта", "Электронная почта не должно быть пустой!"));
+            return Optional.of(new CoreError("Электронная почта", "Не должно быть пустым!"));
         } else if(request.getEmail().matches("^[A-Za-z]([.A-Za-z0-9-]{1,18})([A-Za-z0-9])$")) {
-            return Optional.of(new CoreError("Электронная почта", "Электронная почта имеет неверный формат!"));
+            return Optional.of(new CoreError("Электронная почта", "Неверный формат!"));
         } else {
             return Optional.empty();
         }
@@ -99,7 +96,9 @@ public class SaveClientValidator {
 
     private Optional<CoreError> validCity(SaveClientRequest request) {
         if(request.getCity() == null || request.getCity().isEmpty()) {
-            return Optional.of(new CoreError("Город", "Город не должно быть пустым!"));
+            return Optional.of(new CoreError("Город", "Не должно быть пустым!"));
+        } else if(request.getCity().matches("^[а-яa-z]*$")) {
+            return Optional.of(new CoreError("Город", "Должно начинаться с заглавной!"));
         } else {
             return Optional.empty();
         }
@@ -107,7 +106,9 @@ public class SaveClientValidator {
 
     private Optional<CoreError> validStreet(SaveClientRequest request) {
         if(request.getStreet() == null || request.getStreet().isEmpty()) {
-            return Optional.of(new CoreError("Улица", "Улица не должно быть пустым!"));
+            return Optional.of(new CoreError("Улица", "Не должно быть пустым!"));
+        } else if(request.getStreet().matches("^[а-яa-z]*$")) {
+            return Optional.of(new CoreError("Улица", "Должно начинаться с заглавной!"));
         } else {
             return Optional.empty();
         }
@@ -115,9 +116,9 @@ public class SaveClientValidator {
 
     private Optional<CoreError> validZip(SaveClientRequest request) {
         if(request.getZip() == null || request.getZip().isEmpty()) {
-            return Optional.of(new CoreError("Индекс", "Индекс не должно быть пустым!"));
-        } else if(request.getZip().matches("[*a-zA-Z],[*а-яА-Я]")) {
-            return Optional.of(new CoreError("Индекс", "Индекс должен состоять из цифр!"));
+            return Optional.of(new CoreError("Индекс", "Не должно быть пустым!"));
+        } else if(!String.valueOf(request.getZip()).matches("\\d+")) {
+            return Optional.of(new CoreError("Индекс", "Должно состоять из цифр!"));
         } else {
             return Optional.empty();
         }

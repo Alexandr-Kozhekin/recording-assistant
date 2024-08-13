@@ -27,7 +27,7 @@ public class DeleteClientByIdValidator {
 
     private Optional<CoreError> validId(DeleteClientByIdRequest request) {
         if(!String.valueOf(request.getId()).matches("-?\\d+(\\.\\d+)?")) {
-            return Optional.of(new CoreError("Id клиента", "Id клиента должно содержать цифры!"));
+            return Optional.of(new CoreError("Id клиента", "Введите Id клиента!"));
         } else {
             return Optional.empty();
         }
@@ -38,7 +38,7 @@ public class DeleteClientByIdValidator {
         boolean client = database.deleteClientById(request.getId());
 
         if(!client) {
-            return Optional.of(new CoreError("Клиент", "Клиент не найден!"));
+            return Optional.of(new CoreError("Клиент", "Не найден!"));
         } else {
             return Optional.empty();
         }

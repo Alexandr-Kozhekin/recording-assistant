@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
@@ -37,6 +38,8 @@ public class TicketListeners extends JFrame {
             List<String> is = List.of(idProcedure.getText().split(" "));
             List<Long> ids = new ArrayList<>();
 
+            DecimalFormat decimalFormat = new DecimalFormat("####.###");
+
             for(String s : is)
                 ids.add(Long.parseLong(s));
 
@@ -51,9 +54,9 @@ public class TicketListeners extends JFrame {
 
             appointmentsList.append("Назначенные процедуры: \n");
             for(Procedure p : response.getTicket().getProcedures())
-                appointmentsList.append(p.getId() + " " + p.getName() + " " + p.getDescription() + " " + p.getTotalPrice() + "\n");
+                appointmentsList.append(p.getId() + " " + p.getName() + " " + p.getDescription() + " " + decimalFormat.format(p.getTotalPrice()) + "$"  + "\n");
 
-            appointmentsList.append("Стоимость процедур: " + response.getTicket().getTotalPrice() + "\n");
+            appointmentsList.append("Стоимость процедур: " + decimalFormat.format(response.getTicket().getTotalPrice()) + "$" + "\n");
 
             appointmentsList.append("Лечащий врач: " + response.getTicket().getStaff().getFirstName() + " " + response.getTicket().getStaff().getLastName()
                     + " " + response.getTicket().getStaff().getMajor() + "\n");
