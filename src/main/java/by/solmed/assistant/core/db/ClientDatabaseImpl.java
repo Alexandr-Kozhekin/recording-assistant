@@ -2,30 +2,47 @@ package by.solmed.assistant.core.db;
 
 import by.solmed.assistant.core.domain.Client;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 public class ClientDatabaseImpl implements ClientDatabase {
 
     private long clientId = 0L;
-    private List<Client> clients;
+    private List<Client> clients = new ArrayList<>();
+    private final String FILE_NAME = "src/main/java/by/solmed/assistant/saves/client_save.out";
 
     {
-        clients = new ArrayList<>();
-        clients.add(new Client(1L, "Test1", "Test1", "Test1", 13));
-        clients.add(new Client(2L, "Test2", "Test2", "Test2", 15));
-        clientId = clients.size();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            clients = (List<Client>) ois.readObject();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @Override
     public void saveClient(Client client) {
-        clientId++;
-        client.setId(clientId);
-        clients.add(client);
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            clientId++;
+            client.setId(clientId);
+            clients.add(client);
+            oos.writeObject(clients);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @Override
     public boolean deleteClientById(long id) {
-        return clients.removeIf(c -> c.getId() == id);
+        boolean result = clients.removeIf(c -> c.getId() == id);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            oos.writeObject(clients);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return result;
     }
 
     @Override
