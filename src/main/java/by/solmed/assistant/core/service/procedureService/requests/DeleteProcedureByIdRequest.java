@@ -2,13 +2,13 @@ package by.solmed.assistant.core.service.procedureService.requests;
 
 public class DeleteProcedureByIdRequest {
 
-    private long id;
+    private String id;
 
-    public DeleteProcedureByIdRequest(long id) {
+    public DeleteProcedureByIdRequest(String id) {
         this.id = id;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 }

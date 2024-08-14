@@ -13,7 +13,7 @@ public class DeleteProcedureByIdService {
     }
 
     public DeleteProcedureByIdResponse execute(DeleteProcedureByIdRequest request) {
-        return new DeleteProcedureByIdResponse(database.deleteProcedureById(request.getId()));
+        return new DeleteProcedureByIdResponse(database.deleteProcedureById(Long.parseLong(request.getId())));
     }
 
 }

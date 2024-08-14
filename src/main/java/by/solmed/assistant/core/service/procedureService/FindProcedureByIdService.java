@@ -17,7 +17,7 @@ public class FindProcedureByIdService {
 
     public FindProcedureByIdResponse execute(FindProcedureByIdRequest request) {
 
-        Optional<Procedure> procedure = database.findProcedureById(request.getId());
+        Optional<Procedure> procedure = database.findProcedureById(Long.parseLong(request.getId()));
 
         return procedure.map(FindProcedureByIdResponse::new).orElse(null);
     }

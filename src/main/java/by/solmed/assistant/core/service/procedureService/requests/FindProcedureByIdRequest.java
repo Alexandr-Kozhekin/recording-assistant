@@ -2,13 +2,13 @@ package by.solmed.assistant.core.service.procedureService.requests;
 
 public class FindProcedureByIdRequest {
 
-    private long id;
+    private String id;
 
-    public FindProcedureByIdRequest(long id) {
+    public FindProcedureByIdRequest(String id) {
         this.id = id;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 }
