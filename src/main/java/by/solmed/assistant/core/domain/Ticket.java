@@ -1,8 +1,9 @@
 package by.solmed.assistant.core.domain;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Ticket {
+public class Ticket implements Serializable {
 
     private long id;
     private Client client;

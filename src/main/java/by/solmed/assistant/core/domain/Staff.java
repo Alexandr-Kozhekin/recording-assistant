@@ -1,8 +1,9 @@
 package by.solmed.assistant.core.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Staff {
+public class Staff implements Serializable {
 
     private long id;
     private String firstName;

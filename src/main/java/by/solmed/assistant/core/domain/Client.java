@@ -1,8 +1,10 @@
 package by.solmed.assistant.core.domain;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Client {
+public class Client implements Serializable {
 
     private long id;
     private String firstName;
@@ -155,7 +157,8 @@ public class Client {
 
     @Override
     public String toString() {
-        return "id=" + id +
+        return "Client{" +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
@@ -165,7 +168,7 @@ public class Client {
                 ", state='" + state + '\'' +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
-                ", zip='" + zip;
+                ", zip='" + zip + '\'' +
+                '}';
     }
-
 }

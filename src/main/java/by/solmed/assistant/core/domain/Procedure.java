@@ -1,15 +1,16 @@
 package by.solmed.assistant.core.domain;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Procedure {
+public class Procedure implements Serializable {
 
     private long id;
     private String name;
     private String description;
-    private List<Сompound> materials;
-    private Double totalPrice = 0.0D;
+    private List<Compound> materials;
+    private Double totalPrice;
 
     public Procedure(String name, String description, Double totalPrice) {
         this.name = name;
@@ -24,13 +25,15 @@ public class Procedure {
         this.totalPrice = totalPrice;
     }
 
-    public Procedure(String name, String description, List<Сompound> materials) {
+    public Procedure(String name, String description, List<Compound> materials, Double totalPrice) {
         this.name = name;
         this.description = description;
         this.materials = materials;
 
-        for(Сompound c : materials)
-            totalPrice += (c.getPrice() * ((double) 100 / 25));
+        for(Compound c : materials)
+            totalPrice += (c.getPrice() * (((double) 25 / 100) + 1));
+
+        this.totalPrice = totalPrice;
     }
 
     public long getId() {
@@ -57,11 +60,11 @@ public class Procedure {
         this.description = description;
     }
 
-    public List<Сompound> getMaterials() {
+    public List<Compound> getMaterials() {
         return materials;
     }
 
-    public void setMaterials(List<Сompound> materials) {
+    public void setMaterials(List<Compound> materials) {
         this.materials = materials;
     }
 

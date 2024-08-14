@@ -1,17 +1,24 @@
 package by.solmed.assistant.core.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Сompound {
+public class Compound implements Serializable {
 
     private long id;
     private String name;
     private Double price;
 
-    public Сompound() {
+    public Compound() {
     }
 
-    public Сompound(String name, Double price) {
+    public Compound(String name, Double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public Compound(long id, String name, Double price) {
+        this.id = id;
         this.name = name;
         this.price = price;
     }
@@ -44,8 +51,8 @@ public class Сompound {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Сompound сompound = (Сompound) o;
-        return id == сompound.id && Double.compare(price, сompound.price) == 0 && Objects.equals(name, сompound.name);
+        Compound compound = (Compound) o;
+        return id == compound.id && Double.compare(price, compound.price) == 0 && Objects.equals(name, compound.name);
     }
 
     @Override
